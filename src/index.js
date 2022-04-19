@@ -1,10 +1,12 @@
 import React, { createRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { ReactComponent as Menu } from './assets/menu.svg'
 
 import styles from './styles.module.css'
 
-export const Navbar = ({ logo, items, style, float }) => {
+export const Navbar = ({ logo, items, style, float, useRouter }) => {
+  const navigate = useNavigate()
   const styled = {
     barStyles: {
       background: '#0984e3'
@@ -38,12 +40,39 @@ export const Navbar = ({ logo, items, style, float }) => {
       }}
     >
       <div className={styles.logo_wrapper}>
-        <a style={{ ...styled.logoStyles }} href={logo.link}>
-          {logo.img ? <img src={logo.img} alt='logo' /> : logo.text}
-        </a>
+        {useRouter ? (
+          <a
+            style={{ ...styled.logoStyles }}
+            onClick={() => {
+              navigate(logo.link)
+              onClose()
+            }}
+          >
+            {logo.img ? <img src={logo.img} alt='logo' /> : logo.text}
+          </a>
+        ) : (
+          <a style={{ ...styled.logoStyles }} href={logo.link}>
+            {logo.img ? <img src={logo.img} alt='logo' /> : logo.text}
+          </a>
+        )}
       </div>
       <div className={styles.nav_elements}>
         {items.map(({ text, link }, indx) => {
+          if (useRouter) {
+            return (
+              <a
+                onClick={() => {
+                  navigate(link)
+                  onClose()
+                }}
+                key={indx}
+                style={{ ...styled.linkStyles }}
+              >
+                {text}
+              </a>
+            )
+          }
+
           return (
             <a href={link} key={indx} style={{ ...styled.linkStyles }}>
               {text}
@@ -68,6 +97,24 @@ export const Navbar = ({ logo, items, style, float }) => {
             &#x2716;
           </button>
           {items.map(({ text, link }, indx) => {
+            if (useRouter) {
+              return (
+                <a
+                  onClick={() => {
+                    navigate(link)
+                    onClose()
+                  }}
+                  key={indx}
+                  style={{
+                    ...styled.linkStyles,
+                    background: styled.sidebarStyles.background
+                  }}
+                >
+                  {text}
+                </a>
+              )
+            }
+
             return (
               <a
                 href={link}
@@ -86,7 +133,8 @@ export const Navbar = ({ logo, items, style, float }) => {
     </div>
   )
 }
-export const NavbarLeft = ({ logo, items, style, align, float }) => {
+export const NavbarLeft = ({ logo, items, style, align, float, useRouter }) => {
+  const navigate = useNavigate()
   const styled = {
     barStyles: {
       background: '#0984e3'
@@ -120,12 +168,39 @@ export const NavbarLeft = ({ logo, items, style, align, float }) => {
       }}
     >
       <div className={`${styles.logo_wrapper} ${styles.left_logo}`}>
-        <a style={{ ...styled.logoStyles }} href={logo.link}>
-          {logo.img ? <img src={logo.img} alt='logo' /> : logo.text}
-        </a>
+        {useRouter ? (
+          <a
+            style={{ ...styled.logoStyles }}
+            onClick={() => {
+              navigate(logo.link)
+              onClose()
+            }}
+          >
+            {logo.img ? <img src={logo.img} alt='logo' /> : logo.text}
+          </a>
+        ) : (
+          <a style={{ ...styled.logoStyles }} href={logo.link}>
+            {logo.img ? <img src={logo.img} alt='logo' /> : logo.text}
+          </a>
+        )}
       </div>
       <div className={styles.nav_elements}>
         {items.map(({ text, link }, indx) => {
+          if (useRouter) {
+            return (
+              <a
+                onClick={() => {
+                  navigate(link)
+                  onClose()
+                }}
+                key={indx}
+                style={{ ...styled.linkStyles }}
+              >
+                {text}
+              </a>
+            )
+          }
+
           return (
             <a href={link} key={indx} style={{ ...styled.linkStyles }}>
               {text}
@@ -151,6 +226,24 @@ export const NavbarLeft = ({ logo, items, style, align, float }) => {
             &#x2716;
           </button>
           {items.map(({ text, link }, indx) => {
+            if (useRouter) {
+              return (
+                <a
+                  onClick={() => {
+                    navigate(link)
+                    onClose()
+                  }}
+                  key={indx}
+                  style={{
+                    ...styled.linkStyles,
+                    background: styled.sidebarStyles.background
+                  }}
+                >
+                  {text}
+                </a>
+              )
+            }
+
             return (
               <a
                 href={link}
